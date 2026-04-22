@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Keyword Detection - Detector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260422ui3" />
+  <script src="/js/common.js?v=20260422ui3" defer></script>
+  <script src="/js/keywords.js?v=20260422ui3" defer></script>
+  <script src="/js/rabinKarp.js?v=20260422ui3" defer></script>
+  <script src="/js/detector.js?v=20260422ui3" defer></script>
+</head>
+<body data-page="detector" data-protected="true">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/index.html">UPI Fraud Keyword Detection</a>
+        <nav class="nav-links">
+          <a data-nav href="/index.html">Home</a>
+          <a data-nav href="/detector.html">Detector</a>
+          <a data-nav href="/how-it-works.html">How It Works</a>
+          <a data-nav href="/algorithm.html">Algorithm Explanation</a>
+          <a id="auth-link" data-nav href="/auth.html">Login or Signup</a>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </nav>
+        <div id="user-label" class="nav-user"></div>
+      </div>
+    </header>
+
+    <main class="main">
+      <h1 class="page-title">Fraud Message Detector</h1>
+      <p class="page-subtitle">Paste or type a message to detect suspicious UPI scam keywords in real time.</p>
+
+      <div class="detector-layout">
+        <section class="card">
+          <div class="form-row">
+            <label for="message-input">Message Input</label>
+            <textarea id="message-input" placeholder="Enter message text for analysis"></textarea>
+          </div>
+          <button id="analyze-btn" class="btn" type="button">Analyze Message</button>
+          <div id="detector-message" class="message hidden"></div>
+
+          <h3>Highlighted Output</h3>
+          <div id="highlighted-output" class="preview-box"></div>
+        </section>
+
+        <section class="card">
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Fraud Probability</div>
+              <div id="risk-score" class="value">0%</div>
+            </div>
+            <div class="stat">
+              <div class="label">Detected Keywords</div>
+              <div id="keyword-count" class="value">0</div>
+            </div>
+            <div class="stat">
+              <div class="label">Total Matches</div>
+              <div id="match-count" class="value">0</div>
+            </div>
+          </div>
+
+          <p id="risk-label" class="risk-low">Risk Level: Low</p>
+
+          <h3>Detected Keyword List</h3>
+          <div id="keyword-list" class="keyword-list"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">UPI Fraud Keyword Detection | <span id="year"></span></footer>
+  </div>
+</body>
+</html>
