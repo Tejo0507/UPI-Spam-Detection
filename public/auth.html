@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Keyword Detection - Authentication</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260422ui3" />
+  <script src="/js/common.js?v=20260422ui3" defer></script>
+  <script src="/js/auth.js?v=20260422ui3" defer></script>
+</head>
+<body data-page="auth">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/index.html">UPI Fraud Keyword Detection</a>
+        <nav class="nav-links">
+          <a data-nav href="/index.html">Home</a>
+          <a data-nav href="/detector.html">Detector</a>
+          <a data-nav href="/how-it-works.html">How It Works</a>
+          <a data-nav href="/algorithm.html">Algorithm Explanation</a>
+          <a id="auth-link" data-nav href="/auth.html">Login or Signup</a>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </nav>
+        <div id="user-label" class="nav-user"></div>
+      </div>
+    </header>
+
+    <main class="main auth-wrap">
+      <h1 class="page-title">Authentication</h1>
+      <p class="page-subtitle">Create an account or sign in to access protected fraud detection features.</p>
+
+      <section class="card">
+        <div class="auth-switch">
+          <button id="show-login" class="btn" type="button">Login</button>
+          <button id="show-signup" class="btn btn-secondary" type="button">Signup</button>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="form-row">
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-row">
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required minlength="8" />
+          </div>
+          <button class="btn" type="submit">Login</button>
+          <div id="login-message" class="message hidden"></div>
+        </form>
+
+        <form id="signup-form" class="hidden" novalidate>
+          <div class="form-row-inline">
+            <div>
+              <label for="signup-name">Full Name</label>
+              <input id="signup-name" name="name" type="text" autocomplete="name" required minlength="3" />
+            </div>
+            <div>
+              <label for="signup-email">Email</label>
+              <input id="signup-email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="form-row-inline">
+            <div>
+              <label for="signup-password">Password</label>
+              <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="8" />
+            </div>
+            <div>
+              <label for="signup-confirm">Confirm Password</label>
+              <input id="signup-confirm" name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" />
+            </div>
+          </div>
+          <button class="btn" type="submit">Create Account</button>
+          <div id="signup-message" class="message hidden"></div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">UPI Fraud Keyword Detection | <span id="year"></span></footer>
+  </div>
+</body>
+</html>
