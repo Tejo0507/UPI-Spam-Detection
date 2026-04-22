@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ UPI Spam Detection 
+# UPI Spam Detection 
 
 **A modern, robust web application to detect and prevent UPI payment spam using the Rabin-Karp string matching algorithm.**
 
@@ -15,27 +15,27 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 With the rise of Digital India, UPI (Unified Payments Interface) has become the primary mode of transactions. However, this has also led to an alarming increase in UPI spam and fraudulent payment requests. 
 
 This project is a powerful front-to-back solution that analyzes incoming UPI payment request notes and metadata against a vast database of known spam signatures using the highly efficient **Rabin-Karp Algorithm**.
 
-## ✨ Features
+## Features
 
-- 🔍 **Real-time Spam Detection**: Instantly analyzes text to flag potential spam triggers.
-- ⚙️ **Rabin-Karp Powered**: Educates and utilizes the Rabin-Karp pattern matching algorithm for blazing-fast string matching.
-- 🔐 **Secure Authentication**: Built-in user authentication flow.
-- 📊 **Algorithm Visualization**: Interactive UI explaining how the detection algorithm works under the hood.
-- 📱 **Responsive Design**: Modern, clean, and mobile-friendly interface.
+- **Real-time Spam Detection**: Instantly analyzes text to flag potential spam triggers.
+- **Rabin-Karp Powered**: Educates and utilizes the Rabin-Karp pattern matching algorithm for blazing-fast string matching.
+- **Secure Authentication**: Built-in user authentication flow.
+- **Algorithm Visualization**: Interactive UI explaining how the detection algorithm works under the hood.
+- **Responsive Design**: Modern, clean, and mobile-friendly interface.
 
-## 🧠 How it Works
+## How it Works
 
 The core of our detection engine relies on checking transaction notes for common spam patterns (e.g., " कैशबैक", "Lottery", "Prize"). 
 
 Instead of basic string searching, we implement the **Rabin-Karp algorithm** which hashes the search pattern and the text window. If the hashes match, it performs a character-by-character check, reducing the time complexity significantly for multiple pattern searches.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 * **HTML5 & CSS3**: For semantic structure and stylish, modern components.
@@ -45,7 +45,7 @@ Instead of basic string searching, we implement the **Rabin-Karp algorithm** whi
 * **Node.js**: Server environment.
 * *(Express likely serves the static files inside the `public/` directory)*
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 📦 UPI-Spam-Detection
@@ -70,7 +70,7 @@ Instead of basic string searching, we implement the **Rabin-Karp algorithm** whi
  ┗ 📜 README.md
 ```
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 Want to run the project locally? Follow these steps:
 
@@ -95,7 +95,7 @@ Want to run the project locally? Follow these steps:
 4. **Open in Browser**
    Navigate to `http://localhost:3000` (or the port specified in your console).
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome! 
 Feel free to check [issues page](https://github.com/Tejo0507/UPI-Spam-Detection/issues) if you want to contribute.
@@ -106,11 +106,11 @@ Feel free to check [issues page](https://github.com/Tejo0507/UPI-Spam-Detection/
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📜 License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 <div align="center">
-Made with ❤️ for safer digital payments.
+Made with care for safer digital payments.
 </div>
