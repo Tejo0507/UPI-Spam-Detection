@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Keyword Detection - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260422ui3" />
+  <script src="/js/common.js?v=20260422ui3" defer></script>
+</head>
+<body data-page="home">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/index.html">UPI Fraud Keyword Detection</a>
+        <nav class="nav-links">
+          <a data-nav href="/index.html">Home</a>
+          <a data-nav href="/detector.html">Detector</a>
+          <a data-nav href="/how-it-works.html">How It Works</a>
+          <a data-nav href="/algorithm.html">Algorithm Explanation</a>
+          <a id="auth-link" data-nav href="/auth.html">Login or Signup</a>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </nav>
+        <div id="user-label" class="nav-user"></div>
+      </div>
+    </header>
+
+    <main class="main">
+      <h1 class="page-title">UPI Fraud Keyword Detection System</h1>
+      <p class="page-subtitle">Keyword-based scam message screening for payment and account security use cases.</p>
+
+      <section class="grid grid-3">
+        <article class="card">
+          <h2>Financial Security Context</h2>
+          <p>
+            UPI users routinely receive suspicious payment prompts, verification requests, and account warning messages.
+            This application identifies risky terms in incoming text and helps users respond cautiously.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Detection Approach</h2>
+          <p>
+            The detector applies the Rabin-Karp algorithm to scan messages against a large fraud keyword dataset.
+            Matching terms are highlighted and aggregated into a risk score.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Operational Use</h2>
+          <p>
+            This workflow can be integrated into support desks, fraud escalation teams, and customer-facing warning tools
+            to flag potential social engineering attempts in real time.
+          </p>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>System Capabilities</h2>
+        <ul class="section-list">
+          <li>Authentication with local user management and session handling.</li>
+          <li>Protected detector access for authenticated users.</li>
+          <li>Rabin-Karp based string matching with hashing and sliding window logic.</li>
+          <li>Live keyword detection while typing and full analysis on demand.</li>
+          <li>Detailed algorithm explanation and interactive step visualization.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Start Analysis</h2>
+        <p>Open the detector to analyze suspicious text and inspect detected fraud patterns.</p>
+        <a class="btn" href="/detector.html">Go to Detector</a>
+      </section>
+    </main>
+
+    <footer class="footer">UPI Fraud Keyword Detection | <span id="year"></span></footer>
+  </div>
+</body>
+</html>
