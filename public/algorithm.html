@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Keyword Detection - Algorithm Explanation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260422ui3" />
+  <script src="/js/common.js?v=20260422ui3" defer></script>
+  <script src="/js/rabinKarp.js?v=20260422ui3" defer></script>
+  <script src="/js/algorithm.js?v=20260422ui3" defer></script>
+</head>
+<body data-page="algorithm">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/index.html">UPI Fraud Keyword Detection</a>
+        <nav class="nav-links">
+          <a data-nav href="/index.html">Home</a>
+          <a data-nav href="/detector.html">Detector</a>
+          <a data-nav href="/how-it-works.html">How It Works</a>
+          <a data-nav href="/algorithm.html">Algorithm Explanation</a>
+          <a id="auth-link" data-nav href="/auth.html">Login or Signup</a>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </nav>
+        <div id="user-label" class="nav-user"></div>
+      </div>
+    </header>
+
+    <main class="main">
+      <h1 class="page-title">Rabin-Karp Algorithm Explanation</h1>
+      <p class="page-subtitle">Simple and structured view of how hashing based string matching detects fraud patterns efficiently.</p>
+
+      <section class="card">
+        <h2>1. Problem Statement</h2>
+        <p>
+          The detector must search a long message for many suspicious words and phrases such as account warnings,
+          payment requests, and verification prompts. Rechecking every character for every keyword can be expensive.
+        </p>
+
+        <h2>2. Why Rabin-Karp</h2>
+        <p>
+          Rabin-Karp converts text windows and pattern strings into numeric hash values. Instead of comparing complete
+          strings at every position, it compares hashes first. Full character comparison is only done when hashes match.
+          This reduces repeated direct comparisons in practical scanning workloads.
+        </p>
+
+        <h2>3. Step by Step Process</h2>
+        <ol class="section-list">
+          <li>Choose a base and prime modulus for hashing.</li>
+          <li>Compute hash of the target pattern.</li>
+          <li>Compute hash of the first window of text with same length as pattern.</li>
+          <li>Compare window hash and pattern hash.</li>
+          <li>If hashes match, verify characters one by one to avoid collision errors.</li>
+          <li>Slide the window by one position and update hash using rolling hash formula.</li>
+          <li>Repeat until the window reaches the end of text.</li>
+        </ol>
+
+        <h2>4. Time Complexity</h2>
+        <p>
+          Average case for one pattern is O(n + m), where n is text length and m is pattern length, because rolling
+          hash update is constant time per shift. Worst case can reach O(nm) when many hash collisions occur, but this
+          is uncommon with a good modulus and input distribution.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Rabin-Karp Visualization</h2>
+        <p>Click Start Visualization to run the full simulation automatically, then use step controls for review if needed.</p>
+
+        <div class="form-row">
+          <label for="viz-text">Text</label>
+          <textarea id="viz-text">urgent update kyc now to avoid account blocked and claim reward</textarea>
+        </div>
+
+        <div class="form-row-inline">
+          <div>
+            <label for="viz-pattern">Pattern</label>
+            <input id="viz-pattern" type="text" value="account blocked" />
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button id="viz-start" class="btn" type="button">Start Visualization</button>
+          </div>
+        </div>
+
+        <div id="viz-feedback" class="message hidden"></div>
+
+        <div class="rk-layout">
+          <div class="rk-visual-pane">
+            <div class="visual-board">
+              <strong>Sliding Window Over Text</strong>
+              <div id="viz-track" class="rk-track">
+                <div id="viz-window-frame" class="rk-window-frame hidden"></div>
+                <div id="viz-char-line" class="rk-char-line"></div>
+              </div>
+            </div>
+
+            <div class="visual-board">
+              <strong>Target Keyword</strong>
+              <div id="viz-pattern-line" class="rk-pattern-line"></div>
+            </div>
+
+            <div class="rk-hash-grid">
+              <div class="rk-hash-box">
+                <div class="rk-hash-label">Current Window Hash</div>
+                <div id="viz-window-hash" class="rk-hash-value">-</div>
+              </div>
+              <div class="rk-hash-box">
+                <div class="rk-hash-label">Target Pattern Hash</div>
+                <div id="viz-pattern-hash" class="rk-hash-value">-</div>
+              </div>
+              <div class="rk-hash-box">
+                <div class="rk-hash-label">Hash Comparison</div>
+                <div id="viz-hash-status" class="rk-status-badge rk-status-neutral">Not started</div>
+              </div>
+              <div class="rk-hash-box">
+                <div class="rk-hash-label">Window Index</div>
+                <div id="viz-window-index" class="rk-hash-value">-</div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button id="viz-prev" class="btn btn-secondary" type="button">Previous Step</button>
+              <button id="viz-next" class="btn" type="button">Next Step</button>
+              <button id="viz-reset" class="btn btn-secondary" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="rk-explain-pane">
+            <h3>Step-by-Step Explanation</h3>
+            <div id="viz-step-counter" class="meta-box">Step: -</div>
+            <div class="rk-action-box">
+              <div id="viz-action-title" class="rk-action-title">Awaiting start</div>
+              <p id="viz-action-text" class="rk-action-text">Click Start Visualization to initialize the first window and run automatic progression.</p>
+            </div>
+            <div id="viz-window-text" class="meta-box">Current Window: -</div>
+            <div id="viz-shift-text" class="meta-box">Shift Detail: -</div>
+            <div>
+              <strong>Execution Trace</strong>
+              <ul id="viz-log" class="rk-log"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">UPI Fraud Keyword Detection | <span id="year"></span></footer>
+  </div>
+</body>
+</html>
