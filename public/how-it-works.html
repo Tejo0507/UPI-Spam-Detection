@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Keyword Detection - How It Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260422ui3" />
+  <script src="/js/common.js?v=20260422ui3" defer></script>
+</head>
+<body data-page="how-it-works">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/index.html">UPI Fraud Keyword Detection</a>
+        <nav class="nav-links">
+          <a data-nav href="/index.html">Home</a>
+          <a data-nav href="/detector.html">Detector</a>
+          <a data-nav href="/how-it-works.html">How It Works</a>
+          <a data-nav href="/algorithm.html">Algorithm Explanation</a>
+          <a id="auth-link" data-nav href="/auth.html">Login or Signup</a>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </nav>
+        <div id="user-label" class="nav-user"></div>
+      </div>
+    </header>
+
+    <main class="main">
+      <h1 class="page-title">How the Detection Workflow Operates</h1>
+      <p class="page-subtitle">From user input to risk scoring and highlighted output.</p>
+
+      <section class="grid grid-2">
+        <article class="card">
+          <h2>Step 1: Message Ingestion</h2>
+          <p>
+            A user submits or pastes a potentially suspicious UPI related message in the detector page.
+            Real-time monitoring starts immediately as text changes.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Step 2: Pattern Scanning</h2>
+          <p>
+            The system scans the text against a broad list of known scam words and phrases.
+            Matching is performed with Rabin-Karp rolling hash based search.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Step 3: Match Validation</h2>
+          <p>
+            Hash collisions are handled by character verification to ensure each detected phrase is a true match.
+            This avoids false positives caused by equal hash values alone.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Step 4: Risk Output</h2>
+          <p>
+            The interface highlights suspicious regions in the original text, lists found phrases with frequencies,
+            and calculates a fraud probability score to support decision making.
+          </p>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>Real World Relevance</h2>
+        <ul class="section-list">
+          <li>Supports rapid initial triage for support and fraud teams.</li>
+          <li>Improves user awareness when handling urgent payment messages.</li>
+          <li>Can be used as a pre-filter before escalation to advanced risk systems.</li>
+          <li>Provides transparent rule-driven outcomes suitable for demonstrations and audits.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">UPI Fraud Keyword Detection | <span id="year"></span></footer>
+  </div>
+</body>
+</html>
