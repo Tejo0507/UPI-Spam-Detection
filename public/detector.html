@@ -40,7 +40,11 @@
             <label for="message-input">Message Input</label>
             <textarea id="message-input" placeholder="Enter message text for analysis"></textarea>
           </div>
-          <button id="analyze-btn" class="btn" type="button">Analyze Message</button>
+          <div class="controls">
+            <button id="analyze-btn" class="btn" type="button">Analyze Message</button>
+            <button id="sample-btn" class="btn btn-secondary" type="button">Load Scam Sample</button>
+            <button id="copy-report-btn" class="btn btn-secondary" type="button">Copy Report</button>
+          </div>
           <div id="detector-message" class="message hidden"></div>
 
           <h3>Highlighted Output</h3>
@@ -65,8 +69,14 @@
 
           <p id="risk-label" class="risk-low">Risk Level: Low</p>
 
+          <h3>Risk Drivers</h3>
+          <div id="risk-driver-list" class="keyword-list"></div>
+
           <h3>Detected Keyword List</h3>
           <div id="keyword-list" class="keyword-list"></div>
+
+          <h3>Safety Recommendations</h3>
+          <ul id="safety-advice" class="section-list"></ul>
         </section>
       </div>
     </main>
