@@ -1,110 +1,112 @@
-<div align="center">
+# UPI Spam Detection
 
-# UPI Spam Detection 
+A practical web app for screening suspicious UPI/payment-related messages using a transparent, explainable rule-based engine built on Rabin-Karp pattern matching.
 
-**A modern, robust web application to detect and prevent UPI payment spam using the Rabin-Karp string matching algorithm.**
+## Why This Project Matters
 
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)]()
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)]()
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)]()
+UPI scams rely on urgency, fake rewards, phishing links, and credential theft prompts. This repo helps users and teams:
 
-[Explore Features](#features) • [How it Works](#how-it-works) • [Installation](#installation) • [Tech Stack](#tech-stack)
+- quickly triage suspicious messages,
+- understand why a message was flagged,
+- apply a safety checklist before taking action.
 
-</div>
+## What Users Get
 
----
+- Real-time message scanning with keyword highlighting.
+- Weighted risk scoring based on suspicious terms and high-risk patterns.
+- Additional signal detection for links, urgency language, sensitive data requests, and UPI-handle mentions.
+- Risk drivers panel that explains the major contributors to the score.
+- Safety recommendations generated from analysis output.
+- One-click copyable analysis report for support/escalation workflows.
+- Rabin-Karp step visualization for learning and demos.
 
-## Overview
+## Screens and Flow
 
-With the rise of Digital India, UPI (Unified Payments Interface) has become the primary mode of transactions. However, this has also led to an alarming increase in UPI spam and fraudulent payment requests. 
-
-This project is a powerful front-to-back solution that analyzes incoming UPI payment request notes and metadata against a vast database of known spam signatures using the highly efficient **Rabin-Karp Algorithm**.
-
-## Features
-
-- **Real-time Spam Detection**: Instantly analyzes text to flag potential spam triggers.
-- **Rabin-Karp Powered**: Educates and utilizes the Rabin-Karp pattern matching algorithm for blazing-fast string matching.
-- **Secure Authentication**: Built-in user authentication flow.
-- **Algorithm Visualization**: Interactive UI explaining how the detection algorithm works under the hood.
-- **Responsive Design**: Modern, clean, and mobile-friendly interface.
-
-## How it Works
-
-The core of our detection engine relies on checking transaction notes for common spam patterns (e.g., " कैशबैक", "Lottery", "Prize"). 
-
-Instead of basic string searching, we implement the **Rabin-Karp algorithm** which hashes the search pattern and the text window. If the hashes match, it performs a character-by-character check, reducing the time complexity significantly for multiple pattern searches.
+- Home: product overview and capabilities.
+- Detector: analyze text, inspect score, copy report.
+- How It Works: detection pipeline and response checklist.
+- Algorithm Explanation: Rabin-Karp simulation with step controls.
+- Authentication: simple local demo auth for protected access.
 
 ## Tech Stack
 
-### Frontend
-* **HTML5 & CSS3**: For semantic structure and stylish, modern components.
-* **Vanilla JavaScript**: DOM manipulation, interactive algorithms, and API handling.
+- Frontend: HTML, CSS, Vanilla JavaScript
+- Backend: Node.js, Express
+- Security/ops middleware: Helmet, Compression
 
-### Backend
-* **Node.js**: Server environment.
-* *(Express likely serves the static files inside the `public/` directory)*
+## Local Setup
 
-## Project Structure
-
-```text
-📦 UPI-Spam-Detection
- ┣ 📂 public
- ┃ ┣ 📂 css
- ┃ ┃ ┗ 📜 styles.css
- ┃ ┣ 📂 js
- ┃ ┃ ┣ 📜 algorithm.js    # Logic for algorithm visualization
- ┃ ┃ ┣ 📜 auth.js         # Authentication logic
- ┃ ┃ ┣ 📜 common.js       # Shared utilities
- ┃ ┃ ┣ 📜 detector.js     # Main spam detection engine
- ┃ ┃ ┣ 📜 keywords.js     # Dictionary of spam keywords
- ┃ ┃ ┗ 📜 rabinKarp.js    # Rabin-Karp pattern matching implementation
- ┃ ┣ 📜 404.html
- ┃ ┣ 📜 algorithm.html
- ┃ ┣ 📜 auth.html
- ┃ ┣ 📜 detector.html
- ┃ ┣ 📜 how-it-works.html
- ┃ ┗ 📜 index.html
- ┣ 📜 server.js           # Node.js backend server
- ┣ 📜 package.json        # Project metadata and dependencies
- ┗ 📜 README.md
+1. Clone repository:
+```bash
+git clone https://github.com/Tejo0507/UPI-Spam-Detection.git
+cd UPI-Spam-Detection
 ```
 
-## Installation & Setup
+2. Install dependencies:
+```bash
+npm install
+```
 
-Want to run the project locally? Follow these steps:
+3. Start server:
+```bash
+npm start
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Tejo0507/UPI-Spam-Detection.git
-   cd UPI-Spam-Detection
-   ```
+4. Open app:
+```text
+http://localhost:3000
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+5. Health check endpoint:
+```text
+http://localhost:3000/health
+```
 
-3. **Start the server**
-   ```bash
-   npm start
-   # or
-   node server.js
-   ```
+## Suggested Use Cases
 
-4. **Open in Browser**
-   Navigate to `http://localhost:3000` (or the port specified in your console).
+- Customer-support triage for suspicious payment messages.
+- Awareness training for students, families, and new digital payment users.
+- Demonstrations of explainable rule-based fraud screening.
+- Pre-filtering before escalation to advanced fraud analysis tools.
+
+## Known Limitations
+
+- Detection is rule/keyword/pattern based, not ML-powered.
+- No sender reputation, device fingerprinting, or transaction telemetry.
+- Client-side demo auth with local storage is not production authentication.
+
+Use this project as an early-warning layer, not as the only decision system.
+
+## Improving the Keyword Bank
+
+Update [public/js/keywords.js](public/js/keywords.js) with:
+
+- new scam phrases,
+- weighted terms for severe signals,
+- category and reason metadata for explainability.
+
+Recommended approach:
+
+1. Add 10 to 20 new phrases from current scam trends.
+2. Assign higher weights to OTP/PIN/credential coercion language.
+3. Test on both benign and malicious example messages.
+4. Tune thresholds only after evaluating false positives.
+
+## Contribution Ideas
+
+- Add multilingual scam phrase packs (Hindi/Tamil/Telugu/etc.).
+- Add import/export of detection profiles.
+- Add benchmark page for algorithm performance by input size.
+- Add unit tests for scoring logic and boundary matching.
+- Add optional backend API mode for centralized scanning.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! 
-Feel free to check [issues page](https://github.com/Tejo0507/UPI-Spam-Detection/issues) if you want to contribute.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a feature branch.
+3. Make focused changes with clear commit messages.
+4. Run and verify locally.
+5. Open a pull request with before/after behavior notes.
 
 ## License
 
