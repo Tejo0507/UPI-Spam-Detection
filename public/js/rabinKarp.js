@@ -122,6 +122,112 @@
     return 'Low';
   }
 
+  function isBoundaryChar(charValue) {
+    return !/[a-z0-9]/i.test(charValue || '');
+  }
+
+  function isStandaloneMatch(text, start, length) {
+    const left = start > 0 ? text[start - 1] : '';
+    const right = start + length < text.length ? text[start + length] : '';
+    return isBoundaryChar(left) && isBoundaryChar(right);
+  }
+
+  function parseKeywordEntry(entry) {
+    if (typeof entry === 'string') {
+      return {
+        keyword: entry.trim().toLowerCase(),
+        weight: 1,
+        category: 'keyword',
+        reason: ''
+      };
+    }
+
+    const keyword = String((entry && entry.keyword) || (entry && entry.term) || '').trim().toLowerCase();
+    const weightValue = Number(entry && entry.weight);
+    return {
+      keyword,
+      weight: Number.isFinite(weightValue) && weightValue > 0 ? weightValue : 1,
+      category: String((entry && entry.category) || 'keyword').trim().toLowerCase(),
+      reason: String((entry && entry.reason) || '').trim()
+    };
+  }
+
+  function detectPatternSignals(message) {
+    const rules = [
+      {
+        id: 'suspicious_link',
+        label: 'Suspicious Link',
+        category: 'link',
+        weight: 7,
+        regex: /(https?:\/\/|www\.|bit\.ly|tinyurl|shorturl)/gi,
+        reason: 'Phishing messages often include links that redirect to fake payment or login pages.'
+      },
+      {
+        id: 'upi_id_request',
+        label: 'UPI Handle Mention',
+        category: 'payment',
+        weight: 5,
+        regex: /\b[a-z0-9._-]{2,}@[a-z]{2,}\b/gi,
+        reason: 'Direct payment handle mentions can be used to pressure immediate transfer.'
+      },
+      {
+        id: 'urgent_tone',
+        label: 'Urgent Tone',
+        category: 'social-engineering',
+        weight: 4,
+        regex: /\b(urgent|immediately|act now|last chance|final warning|within \d+ (minutes|hours?))\b/gi,
+        reason: 'Urgency language is a common social-engineering tactic.'
+      },
+      {
+        id: 'sensitive_data_request',
+        label: 'Sensitive Data Request',
+        category: 'credential',
+        weight: 8,
+        regex: /\b(share otp|share pin|cvv|password|enter details|confirm identity)\b/gi,
+        reason: 'Legitimate institutions do not ask for secret credentials through casual messages.'
+      }
+    ];
+
+    const matchedSignals = [];
+
+    for (let i = 0; i < rules.length; i += 1) {
+      const rule = rules[i];
+      const matches = message.match(rule.regex);
+      if (!matches || !matches.length) {
+        continue;
+      }
+
+      matchedSignals.push({
+        id: rule.id,
+        label: rule.label,
+        category: rule.category,
+        count: matches.length,
+        weight: rule.weight,
+        reason: rule.reason
+      });
+    }
+
+    return matchedSignals;
+  }
+
+  function buildAdvice(score, matchedSignals) {
+    const advice = [
+      'Never share OTP, UPI PIN, CVV, or password over calls, chat, or links.',
+      'Verify sender identity through official channels before taking any payment action.'
+    ];
+
+    if (score >= 60) {
+      advice.unshift('Do not click links or approve collect requests from this message.');
+    }
+
+    const hasLinkSignal = matchedSignals.some((item) => item.category === 'link');
+    if (hasLinkSignal) {
+      advice.push('Avoid opening shortened or unknown links. Visit official apps or websites manually.');
+    }
+
+    return advice;
+  }
+
   function analyzeMessage(message, keywords) {
     const cleanMessage = String(message || '');
     const normalizedMessage = cleanMessage.toLowerCase();
@@ -139,23 +245,33 @@
     const frequency = new Map();
     const occurrences = [];
     const keywordSet = new Set();
+    let weightedKeywordScore = 0;
 
     for (let i = 0; i < keywords.length; i += 1) {
-      const keyword = String(keywords[i] || '').trim().toLowerCase();
+      const parsedKeyword = parseKeywordEntry(keywords[i]);
+      const keyword = parsedKeyword.keyword;
       if (!keyword || keywordSet.has(keyword)) {
         continue;
       }
       keywordSet.add(keyword);
 
-      const positions = rabinKarpSearch(normalizedMessage, keyword);
+      const rawPositions = rabinKarpSearch(normalizedMessage, keyword);
+      const singleWordKeyword = !keyword.includes(' ');
+      const positions = singleWordKeyword
+        ? rawPositions.filter((position) => isStandaloneMatch(normalizedMessage, position, keyword.length))
+        : rawPositions;
       if (!positions.length) {
         continue;
       }
 
       frequency.set(keyword, positions.length);
+      weightedKeywordScore += positions.length * parsedKeyword.weight;
       for (let p = 0; p < positions.length; p += 1) {
         occurrences.push({
           keyword,
+          weight: parsedKeyword.weight,
+          category: parsedKeyword.category,
+          reason: parsedKeyword.reason,
           start: positions[p],
           end: positions[p] + keyword.length
         });
@@ -174,22 +290,48 @@
       .map(([keyword, count]) => ({ keyword, count }))
       .sort((a, b) => b.count - a.count || a.keyword.localeCompare(b.keyword));
 
+    const patternSignals = detectPatternSignals(normalizedMessage);
+
     const totalMatches = occurrences.length;
     const uniqueKeywordMatches = detectedKeywords.length;
     const wordCount = cleanMessage.trim().split(/\s+/).length || 1;
 
-    const scoreByUnique = uniqueKeywordMatches * 4;
-    const scoreByCount = totalMatches * 2;
+    const scoreByUnique = uniqueKeywordMatches * 3;
+    const scoreByCount = weightedKeywordScore * 2;
     const scoreByDensity = (totalMatches / wordCount) * 120;
-    const rawScore = scoreByUnique + scoreByCount + scoreByDensity;
+    const scoreByPatternSignals = patternSignals.reduce((total, signal) => total + signal.weight * signal.count, 0);
+    const rawScore = scoreByUnique + scoreByCount + scoreByDensity + scoreByPatternSignals;
     const riskScore = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+    const riskDrivers = [];
+    if (weightedKeywordScore > 0) {
+      riskDrivers.push({
+        label: 'Keyword Matches',
+        category: 'keyword',
+        weight: weightedKeywordScore,
+        count: totalMatches,
+        reason: 'Detected suspicious words and phrases from the fraud keyword bank.'
+      });
+    }
+    for (let i = 0; i < patternSignals.length; i += 1) {
+      const signal = patternSignals[i];
+      riskDrivers.push({
+        label: signal.label,
+        category: signal.category,
+        weight: signal.weight,
+        count: signal.count,
+        reason: signal.reason
+      });
+    }
 
     return {
       highlightedHtml: buildHighlightedText(cleanMessage, charFlags),
       detectedKeywords,
       totalMatches,
       riskScore,
-      riskLabel: getRiskLabel(riskScore)
+      riskLabel: getRiskLabel(riskScore),
+      riskDrivers,
+      advice: buildAdvice(riskScore, patternSignals)
     };
   }
 
