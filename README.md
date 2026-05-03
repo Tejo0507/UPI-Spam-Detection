@@ -19,6 +19,7 @@ UPI scams rely on urgency, fake rewards, phishing links, and credential theft pr
 - Safety recommendations generated from analysis output.
 - One-click copyable analysis report for support/escalation workflows.
 - Rabin-Karp step visualization for learning and demos.
+- Browser extension for quick checks and page scanning.
 
 ## Screens and Flow
 
@@ -60,6 +61,54 @@ http://localhost:3000
 5. Health check endpoint:
 ```text
 http://localhost:3000/health
+```
+
+## Browser Extension (Quick Check)
+
+The extension lives in [extension](extension) and supports:
+
+- Paste-in analysis in the popup.
+- Page scan for visible text.
+- Context-menu analysis for selected text.
+- Optional deep check via the `/analyze` API.
+
+Load unpacked (Chrome/Edge):
+
+1. Open `chrome://extensions` or `edge://extensions`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked** and select the `extension/` folder.
+
+## API: Deep Analysis
+
+POST `/analyze`
+
+```json
+{
+	"message": "Urgent! Your account blocked due to KYC pending.",
+	"language": "both"
+}
+```
+
+Response:
+
+```json
+{
+	"status": "ok",
+	"cached": false,
+	"analysis": {
+		"riskScore": 78,
+		"riskLabel": "High",
+		"detectedKeywords": [],
+		"totalMatches": 0,
+		"riskDrivers": [],
+		"advice": [],
+		"language": "both"
+	},
+	"meta": {
+		"version": "1.0.0",
+		"language": "both"
+	}
+}
 ```
 
 ## Suggested Use Cases
