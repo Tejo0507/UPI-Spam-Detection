@@ -15,6 +15,13 @@ const elements = {
   badge: document.getElementById('badge-status')
 };
 
+const sessionStore = chrome.storage && chrome.storage.session ? chrome.storage.session : chrome.storage.local;
+
+function setButtonsEnabled(enabled) {
+  elements.analyze.disabled = !enabled;
+  elements.scan.disabled = !enabled;
+}
+
 function getKeywordBank(language) {
   if (language === 'en') {
     return window.FRAUD_KEYWORDS_EN || window.FRAUD_KEYWORDS || [];
@@ -61,7 +68,7 @@ function saveLastAnalysis(result, source) {
   if (!result) {
     return;
   }
-  chrome.storage.session.set({
+  sessionStore.set({
     lastAnalysis: {
       ...result,
       source
@@ -143,13 +150,23 @@ async function loadSettings() {
 }
 
 async function loadLastAnalysis() {
-  const data = await chrome.storage.session.get(['lastAnalysis']);
+  const data = await sessionStore.get(['lastAnalysis']);
   if (data.lastAnalysis) {
     renderResult(data.lastAnalysis);
     if (data.lastAnalysis.source) {
       setStatus(`Last check: ${data.lastAnalysis.source}`, 'success');
     }
   }
+}
+
+function verifyCoreReady() {
+  if (!window.UPIDetectorCore || !window.UPIKeywordBank) {
+    setStatus('Extension core failed to load. Reload the extension.', 'error');
+    setButtonsEnabled(false);
+    return false;
+  }
+  setButtonsEnabled(true);
+  return true;
 }
 
 elements.analyze.addEventListener('click', () => {
@@ -197,3 +214,4 @@ elements.useServer.addEventListener('change', () => {
 
 loadSettings();
 loadLastAnalysis();
+verifyCoreReady();
