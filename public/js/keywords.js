@@ -261,5 +261,41 @@
     'instant compensation'
   ];
 
+  const FRAUD_KEYWORDS_HI = [
+    { keyword: 'ओटीपी', weight: 4, category: 'credential', reason: 'OTP requests are highly sensitive.' },
+    { keyword: 'otp शेयर', weight: 4, category: 'credential' },
+    { keyword: 'पिन', weight: 4, category: 'credential' },
+    { keyword: 'यूपीआई पिन', weight: 4, category: 'credential' },
+    { keyword: 'पिन साझा करें', weight: 4, category: 'credential' },
+    { keyword: 'पासवर्ड', weight: 3, category: 'credential' },
+    { keyword: 'लॉगिन', weight: 2, category: 'credential' },
+    { keyword: 'वेरिफाई', weight: 2, category: 'credential' },
+    { keyword: 'सत्यापन आवश्यक', weight: 3, category: 'credential' },
+    { keyword: 'केवाईसी', weight: 3, category: 'credential' },
+    { keyword: 'केवाईसी अपडेट', weight: 3, category: 'credential' },
+    { keyword: 'खाता ब्लॉक', weight: 4, category: 'social-engineering' },
+    { keyword: 'खाता निलंबित', weight: 4, category: 'social-engineering' },
+    { keyword: 'खाता बंद', weight: 4, category: 'social-engineering' },
+    { keyword: 'तुरंत', weight: 2, category: 'social-engineering' },
+    { keyword: 'अभी कार्रवाई', weight: 3, category: 'social-engineering' },
+    { keyword: 'अंतिम चेतावनी', weight: 4, category: 'social-engineering' },
+    { keyword: 'इनाम', weight: 2, category: 'offer' },
+    { keyword: 'लॉटरी', weight: 3, category: 'offer' },
+    { keyword: 'बधाई हो', weight: 2, category: 'offer' },
+    { keyword: 'क्लिक करें', weight: 3, category: 'link' },
+    { keyword: 'लिंक', weight: 2, category: 'link' },
+    { keyword: 'भुगतान अनुरोध', weight: 3, category: 'payment' },
+    { keyword: 'कलेक्ट रिक्वेस्ट', weight: 3, category: 'payment' },
+    { keyword: 'रिफंड', weight: 2, category: 'payment' },
+    { keyword: 'कैशबैक', weight: 2, category: 'offer' },
+    { keyword: 'सपोर्ट नंबर', weight: 2, category: 'authority-impersonation' },
+    { keyword: 'कस्टमर केयर', weight: 2, category: 'authority-impersonation' },
+    { keyword: 'फ्रॉड अलर्ट', weight: 3, category: 'authority-impersonation' },
+    { keyword: 'सरकारी रिफंड', weight: 3, category: 'authority-impersonation' }
+  ];
+
+  FRAUD_KEYWORDS.push(...FRAUD_KEYWORDS_HI);
+
   window.FRAUD_KEYWORDS = FRAUD_KEYWORDS;
+  window.FRAUD_KEYWORDS_HI = FRAUD_KEYWORDS_HI;
 })();
