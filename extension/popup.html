@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UPI Scam Checker</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">UPI Scam Checker</p>
+          <h1>Scan before you tap.</h1>
+        </div>
+        <div class="badge" id="badge-status">Local + optional server</div>
+      </header>
+
+      <section class="panel">
+        <label class="label" for="message">Message or snippet</label>
+        <textarea id="message" rows="5" placeholder="Paste a message, or scan the current page..."></textarea>
+        <div class="row">
+          <div class="field">
+            <label class="label" for="language">Language</label>
+            <select id="language">
+              <option value="both">English + Hindi</option>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="server-url">Server URL</label>
+            <input id="server-url" type="text" placeholder="http://localhost:3000" />
+          </div>
+        </div>
+        <label class="toggle">
+          <input id="use-server" type="checkbox" />
+          <span>Enable deep check via server</span>
+        </label>
+        <div class="actions">
+          <button id="analyze" class="primary">Analyze</button>
+          <button id="scan" class="ghost">Scan Page</button>
+        </div>
+        <p class="helper" id="status"></p>
+      </section>
+
+      <section class="panel result">
+        <div class="result-header">
+          <div>
+            <p class="label">Risk score</p>
+            <p class="score" id="risk-score">0</p>
+          </div>
+          <div class="pill" id="risk-label">Low</div>
+        </div>
+        <div class="result-grid">
+          <div>
+            <p class="label">Top drivers</p>
+            <ul id="risk-drivers" class="list"></ul>
+          </div>
+          <div>
+            <p class="label">Advice</p>
+            <ul id="advice" class="list"></ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="shared/detector-core.js"></script>
+    <script src="shared/keywords.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
