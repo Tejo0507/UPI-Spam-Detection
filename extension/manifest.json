@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "UPI Scam Checker",
+  "version": "1.0.0",
+  "description": "Check messages for UPI scam risk using local + optional server analysis.",
+  "action": {
+    "default_title": "UPI Scam Checker",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "shared/detector-core.js",
+        "shared/keywords.js",
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
