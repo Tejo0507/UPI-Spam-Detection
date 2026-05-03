@@ -7,6 +7,7 @@ The detector computes risk score using a weighted rule-based model.
 - Keyword matches from the curated fraud term bank.
 - Additional pattern signals from regex-based checks.
 - Match density relative to message length.
+- Multilingual keyword packs (English + Hindi) when enabled.
 
 ## Score Components
 
@@ -26,3 +27,4 @@ Final score is clamped to 0-100 and mapped to labels:
 - Improve explainability over black-box scoring.
 - Prioritize social-engineering and credential-theft indicators.
 - Reduce false positives with standalone word boundary checks.
+- Keep the model stable for both local (extension) and server analysis.
